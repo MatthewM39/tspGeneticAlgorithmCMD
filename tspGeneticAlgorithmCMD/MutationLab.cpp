@@ -74,7 +74,6 @@ void MutationLab::runTest(){
         std::vector<Path> mates;
         mateIt++;
         for(int j = 0; j < fitnessRate; j++){
-            //std::cout << j << " adding to vector from fit\n";
             newGeneration.emplace_back(*myIt);
             mates.emplace_back(*mateIt);
             mateIt++;
@@ -87,7 +86,6 @@ void MutationLab::runTest(){
                 newGeneration.emplace_back(*myIt);
                 mates.emplace_back(*mateIt);
             }
-           // std::cout << j << " looping unfit\n";
             mateIt++;
             myIt++;
             j++;
@@ -98,7 +96,6 @@ void MutationLab::runTest(){
         myIt = newGeneration.begin();
         mateIt = mates.begin();
         for(int j = 0; j < newGeneration.size() && j < mates.size(); j++){
-          //  std::cout << j << " looping newGen\n";
             myIt->crossOver(*mateIt);
             Path temp = *myIt;
             myPaths.emplace_back(temp);

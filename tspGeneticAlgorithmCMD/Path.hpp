@@ -31,8 +31,7 @@ public:
      and the mate passed as a parameter is deleted. */
     void crossOver(Path mate);
     void printPath();
-    // destructor for a path
-   // ~Path();
+
     
     Coord * myPath;
     double distance;
