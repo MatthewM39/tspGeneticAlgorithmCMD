@@ -47,8 +47,6 @@ public:
     }
     double pointDist(Coord a, Coord b);
     
-    // copy constructor
-    Path(const Path &obj);
         
 private:
     

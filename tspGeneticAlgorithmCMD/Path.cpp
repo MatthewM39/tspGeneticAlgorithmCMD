@@ -148,19 +148,3 @@ void Path::printPath(){
 double Path::pointDist(Coord a, Coord b){
     return sqrt(pow((a.x - b.x), 2) + pow((a.y - b.y), 2));         // the distance formula
 }
-
-
-Path::Path(const Path &obj){
-    for(int i = 0; i < 8; i++){
-        mutationVals[i] = obj.mutationVals[i];
-    }
-    startingLocation = obj.startingLocation;
-    length = obj.length;
-    myPath = new Coord [length];                                    // dynamically allocate the Coord array
-    for(int i = 0; i < length; i++){
-        myPath[i] = obj.myPath[i];
-    }
-    crossVals[0] = obj.crossVals[0];
-    crossVals[1] = obj.crossVals[1];
-    distance = obj.distance;
-}
