@@ -57,16 +57,10 @@ void Path::mutate(){
 void Path::swapMutate(){
     for(int i = 0; i < mutationVals[2]; i++){
         if(rand() % (10000 / mutationVals[3]) == 1){
-            int ind = rand() % length;                      // get a random number from 0 to length-1
-            if(ind >= length - mutationVals[4]){            // if the index excedes the chain length...
-                ind -= mutationVals[4];                     // then we need to subtract the chain length
-            }
-            int ind2 = rand() % length;                     // get a second random number from 0 to length-1
-            if(ind2 >= length - mutationVals[4]){           // compare the index to the chain length as well...
-                ind2 -= (mutationVals[4] + 1);
-            }
-            while(abs(ind2 - ind) < mutationVals[4]){      // make sure the chains dont overlap!
-                ind = rand() % length;                      // get a random number from 0 to length-1
+            int ind;
+            int ind2;
+            do {                                                // make sure the chains dont overlap!
+                ind = rand() % length;                          // get a random number from 0 to length-1
                 if(ind >= length - mutationVals[4]){            // if the index excedes the chain length...
                     ind -= mutationVals[4];                     // then we need to subtract the chain length
                 }
@@ -74,7 +68,8 @@ void Path::swapMutate(){
                 if(ind2 >= length - mutationVals[4]){
                     ind2 -= (mutationVals[4] + 1);            // subtract one just to be safe!
                 }
-            }
+            } while(abs(ind2 - ind) < mutationVals[4]);
+            
             for(int j = 0; j < mutationVals[4]; j++){       // now we can swap the two chains!
                 swap(ind + j, ind2 + j);                    // swap each, value by value
             }
@@ -118,7 +113,7 @@ void Path::crossOver(Path mate){
             random = length - crossVals[1] - 1;             // fix it if it is OOB
         }
         for(int j = 0; j < crossVals[1]; j++){              // now loop the length of a crossover chain...
-            swapGenes(mate.myPath[random], j);                  // swap the mate's gene in and replace the old!
+            swapGenes(mate.myPath[random], j);              // swap the mate's gene in and replace the old!
         }
         mutate();                                           // Crossing over has a chance of causing mutations!
         swapMutate();
@@ -127,11 +122,11 @@ void Path::crossOver(Path mate){
     }
 }
 void Path::calcDistance(){
-    distance = sqrt(pow((myPath[0].x - startingLocation.x), 2) + pow((myPath[0].y - startingLocation.y), 2));
+    distance = pointDist(myPath[0], startingLocation);
     for(int i = 0; i < length - 1; i++){
-        distance += sqrt(pow((myPath[i+1].x - myPath[i].x), 2) + pow((myPath[i+1].y - myPath[i].y), 2));
+        distance += pointDist(myPath[i], myPath[i+1]);
     }
-    distance += sqrt(pow((startingLocation.x - myPath[length - 1].x), 2) + pow((startingLocation.y - myPath[length - 1].y), 2));
+    distance += pointDist(myPath[length - 1], startingLocation);
 }
 
 void Path::printPath(){
@@ -169,7 +164,3 @@ Path::Path(const Path &obj){
     crossVals[1] = obj.crossVals[1];
     distance = obj.distance;
 }
-
-//Path::~Path(){
-   // delete [] myPath;
-//}
