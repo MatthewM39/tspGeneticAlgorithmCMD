@@ -31,6 +31,7 @@ void MutationLab::runTest(){
     int fitnessRate;    // percentage to pass on to next generation 1-99
     int unfitRate;      // percentage to pass on for the unfit 0-99
     int crossVals[2];   // crossover values to pass
+    int rate;           // the rate that are fit
     std::cout << "Enter number of cross chains: ";
     std::cin >> crossVals[0];
     std::cout << "Enter length of cross chains: ";
@@ -38,7 +39,7 @@ void MutationLab::runTest(){
     std::cout << "Enter population number: ";
     std::cin >> population;
     std::cout << "Enter fitness rate: ";
-    std::cin >> fitnessRate;
+    std::cin >> rate;
     std::cout << "Enter non-fit generation rate: ";
     std::cin >> unfitRate;
     std::cout << "Enter number of standard mutations, chance of standard mutations: ";
@@ -51,10 +52,12 @@ void MutationLab::runTest(){
     for(int i = 0; i < population; i++){
         myPaths.emplace_back(Path(numLocations, locationArr, startingLocation, conditions, crossVals));     // populate
     }
-    int rate = fitnessRate; // set rate to be the fitness rate
+    
     std::cout << "\n";      // now shift to working on generations...
-    for(int i = 0; i < myPaths.size(); i++){
+    int i = 0;
+    while(myPaths.size() > 2){
         std::cout << "Completed generation " << i << "\n";
+        i++;
         fitnessRate = rate * myPaths.size() / 100;          // calculate the number of fit population members
         std::sort(myPaths.begin(), myPaths.end());          // sort the population with higher distances first
         std::vector<Path>::iterator myIt = myPaths.begin(); // get the max
