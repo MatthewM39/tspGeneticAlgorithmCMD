@@ -18,16 +18,16 @@
 
 class MutationLab{
 public:
-    MutationLab();
-    void runTest();
-    ~MutationLab();
+    MutationLab();                                      // initialize the simulation
+    void runTest();                                     // run the simulation
+    ~MutationLab();                                     // destroy the simulation
 private:
-    Coord startingLocation;
-    Coord * locationArr;
-    int numLocations;
-    std::vector<Path> myPaths;
-    void swapV(int a, int b, std::vector<Path>& myVec);
-    void permuteV(std::vector<Path>& myVec);
+    Coord startingLocation;                             // location to start
+    Coord * locationArr;                                // array of locations to visit
+    int numLocations;                                   // the number of locations to visit
+    std::vector<Path> myPaths;                          // our population vector
+    void swapV(int a, int b, std::vector<Path>& myVec); // shift values in the population vector
+    void permuteV(std::vector<Path>& myVec);            // permute values in the population vector
 };
 
 
