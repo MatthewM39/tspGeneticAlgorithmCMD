@@ -65,7 +65,11 @@ void Path::swapMutate(){
             if(ind2 >= length - mutationVals[4]){           // compare the index to the chain length as well...
                 ind2 -= (mutationVals[4] + 1);
             }
-            while(abs(ind2 - ind) <= mutationVals[4]){      // make sure the chains dont overlap!
+            while(abs(ind2 - ind) < mutationVals[4]){      // make sure the chains dont overlap!
+                ind = rand() % length;                      // get a random number from 0 to length-1
+                if(ind >= length - mutationVals[4]){            // if the index excedes the chain length...
+                    ind -= mutationVals[4];                     // then we need to subtract the chain length
+                }
                 ind2 = rand() % length;                     // generate a new second index until they dont overlap!
                 if(ind2 >= length - mutationVals[4]){
                     ind2 -= (mutationVals[4] + 1);            // subtract one just to be safe!
@@ -88,8 +92,8 @@ void Path::invertMutate(){
             else if(ind >= length - mutationVals[7]){       // check if our index is out of bounds past the length of a chain
                 ind -= (mutationVals[7] + 1);               // if so, go back by the length of the chain and 1
             }
-            for(int i = 1; i < mutationVals[7]; i++){       // now loop through the length of the chain
-                swap(ind + i, ind + mutationVals[7] - i);   // swap the elements in the chain so that they reverse!
+            for(int j = 1; j < mutationVals[7]; j++){       // now loop through the length of the chain
+                swap(ind + j, ind + mutationVals[7] - j);   // swap the elements in the chain so that they reverse!
             }
         }
     }
