@@ -14,6 +14,5 @@ int main(int argc, const char * argv[]) {
     std::cout << "Hello, welcome to the TSP Genetic Solver!\n";
     MutationLab * myLab = new MutationLab;
     myLab->runTest();
-    
     return 0;
 }

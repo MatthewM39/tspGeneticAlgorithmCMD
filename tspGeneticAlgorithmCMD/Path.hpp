@@ -30,23 +30,38 @@ public:
      The Path that calls this function is transformed into the Offspring
      and the mate passed as a parameter is deleted. */
     void crossOver(Path mate);
+    
+    // Print the path generated from the genes
     void printPath();
 
-    
+    // The genes
     Coord * myPath;
+    
+    // The total distance from the starting location, through the path, back to the starting location
     double distance;
+    
+    // overload the < operator to be >
     friend bool operator<(const Path& l, const Path& r)
     {
         return l.distance > r.distance;
     }
     double pointDist(Coord a, Coord b);
+    
+    // copy constructor
     Path(const Path &obj);
+        
 private:
     
-
+    // length of the gene chain
     int length;
+    
+    // the values for crossing rate
     int crossVals[2];
+    
+    // the values for mutation rates
     int mutationVals[8];
+    
+    // the starting coord
     Coord startingLocation;
     
     /* This function is used to swap two values in the Path's array of locations */
@@ -75,6 +90,7 @@ private:
      tells how long the chain that is inverted should be */
     void invertMutate();
     
+    // calculate the distance of the path and set the variable
     void calcDistance();
     
 };

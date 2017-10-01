@@ -13,37 +13,37 @@
 
 Path::Path(int len, Coord * locations, Coord start, int mutations[8], int crosses[2]){
     for(int i = 0; i < 8; i++){
-        mutationVals[i] = mutations[i];
+        mutationVals[i] = mutations[i];             // initialize mutation values
     }
-    startingLocation = start;
-    length = len;
-    myPath = new Coord [length];
-    for(int i = 0; i < length; i++){
+    startingLocation = start;                       // initialize starting location
+    length = len;                                   // initialize length of the gene chain
+    myPath = new Coord [length];                    // allocate the path array
+    for(int i = 0; i < length; i++){                // load in values from the passed array
         myPath[i] = locations[i];
     }
-    crossVals[0] = crosses[0];
+    crossVals[0] = crosses[0];                      // set the values for crossover
     crossVals[1] = crosses[1];
-    permutePath();
-    calcDistance();
+    permutePath();                                  // now randomize the gene order
+    calcDistance();                                 // calculate the distance for the gene order
 }
 
 void Path::swap(int a, int b){
-    Coord temp = myPath[a]; // set temp to be the first
-    myPath[a] = myPath[b]; // set the first to be the second
-    myPath[b] = temp;     // now set the second to be temp
+    Coord temp = myPath[a];                         // set temp to be the first
+    myPath[a] = myPath[b];                          // set the first to be the second
+    myPath[b] = temp;                               // now set the second to be temp
 }
 
 void Path::permutePath(){
-    for(int i = 0; i < length; i++){
-        int random = rand() % length;
+    for(int i = 0; i < length; i++){                // loop through the gene list
+        int random = rand() % length;               // swap the current value with a random value
         swap(i, random);
     }
 }
 
 void Path::mutate(){
-    for(int i = 0; i < mutationVals[0]; i++){
-        if(rand() % (10000 / mutationVals[1]) == 1){
-            int ind = rand() % length;
+    for(int i = 0; i < mutationVals[0]; i++){                  // loop through the number of mutations
+        if(rand() % (10000 / mutationVals[1]) == 1){           // get mutation chance
+            int ind = rand() % length;                         // need to mutate, so swap a gene
             if(ind == length - 1){
                 swap(ind - 1, ind);
             }
@@ -59,14 +59,14 @@ void Path::swapMutate(){
         if(rand() % (10000 / mutationVals[3]) == 1){
             int ind;
             int ind2;
-            do {                                                // make sure the chains dont overlap!
-                ind = rand() % length;                          // get a random number from 0 to length-1
-                if(ind >= length - mutationVals[4]){            // if the index excedes the chain length...
-                    ind -= mutationVals[4];                     // then we need to subtract the chain length
+            do {                                             // make sure the chains dont overlap!
+                ind = rand() % length;                       // get a random number from 0 to length-1
+                if(ind >= length - mutationVals[4]){         // if the index excedes the chain length...
+                    ind -= mutationVals[4];                  // then we need to subtract the chain length
                 }
-                ind2 = rand() % length;                     // generate a new second index until they dont overlap!
+                ind2 = rand() % length;                      // generate a new second index until they dont overlap!
                 if(ind2 >= length - mutationVals[4]){
-                    ind2 -= (mutationVals[4] + 1);            // subtract one just to be safe!
+                    ind2 -= (mutationVals[4] + 1);           // subtract one just to be safe!
                 }
             } while(abs(ind2 - ind) < mutationVals[4]);
             
@@ -122,11 +122,11 @@ void Path::crossOver(Path mate){
     }
 }
 void Path::calcDistance(){
-    distance = pointDist(myPath[0], startingLocation);
+    distance = pointDist(myPath[0], startingLocation);      // the first distance is from the start to the first gene
     for(int i = 0; i < length - 1; i++){
-        distance += pointDist(myPath[i], myPath[i+1]);
+        distance += pointDist(myPath[i], myPath[i+1]);      // now iteratively calculate for each gene in the chain
     }
-    distance += pointDist(myPath[length - 1], startingLocation);
+    distance += pointDist(myPath[length - 1], startingLocation);  // now calculate for the last gene to the starting location
 }
 
 void Path::printPath(){
@@ -146,7 +146,7 @@ void Path::printPath(){
 }
 
 double Path::pointDist(Coord a, Coord b){
-    return sqrt(pow((a.x - b.x), 2) + pow((a.y - b.y), 2));
+    return sqrt(pow((a.x - b.x), 2) + pow((a.y - b.y), 2));         // the distance formula
 }
 
 
@@ -156,7 +156,7 @@ Path::Path(const Path &obj){
     }
     startingLocation = obj.startingLocation;
     length = obj.length;
-    myPath = new Coord [length];
+    myPath = new Coord [length];                                    // dynamically allocate the Coord array
     for(int i = 0; i < length; i++){
         myPath[i] = obj.myPath[i];
     }
