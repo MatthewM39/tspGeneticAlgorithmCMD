@@ -128,7 +128,7 @@ void Path::crossOver(Path mate){
 }
 void Path::calcDistance(){
     distance = sqrt(pow((myPath[0].x - startingLocation.x), 2) + pow((myPath[0].y - startingLocation.y), 2));
-    for(int i = 0; i < length; i++){
+    for(int i = 0; i < length - 1; i++){
         distance += sqrt(pow((myPath[i+1].x - myPath[i].x), 2) + pow((myPath[i+1].y - myPath[i].y), 2));
     }
     distance += sqrt(pow((startingLocation.x - myPath[length - 1].x), 2) + pow((startingLocation.y - myPath[length - 1].y), 2));
