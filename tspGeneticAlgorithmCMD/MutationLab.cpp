@@ -63,7 +63,6 @@ void MutationLab::runTest(){
         std::vector<Path>::iterator myIt = myPaths.begin(); // get the max
         std::vector<Path> newGeneration;
         if(myIt->distance > max->distance){                 // we found a new max path
-            std::cout << max->distance << std::endl;
             newGeneration.emplace_back(*max);
             *max = *myIt;
         }
@@ -106,6 +105,7 @@ void MutationLab::runTest(){
     }
     std::cout << "Maximum path length found!\n\n\n";
     max->printPath();
+    delete max;
 }
 
 MutationLab::~MutationLab(){
